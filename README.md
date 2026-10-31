@@ -23,6 +23,12 @@ The owner initially builds and configures the first robot. Long term, the system
 
 Neither command controls a motor, network service, printer or external device. The commands create files only at explicitly supplied paths, refusing to overwrite existing output.
 
+## One-click future-machine setup
+
+**Windows:** double-click `StartSimulation.cmd` to create isolated Python `.venv`, install MuJoCo, run full tests, generate offline evidence, probe optional existing local Ollama and open the 2D browser + 6-axis native MuJoCo scene. Headless CI: `python scripts/bootstrap.py --headless`. See [one-run environment guide](docs/ONE_CLICK_SIMULATION.md).
+
+This is a **simulation-only** environment bootstrap. It does not install models/GPU drivers, train AI, register AIBridge workers or control motors; a passing simulator is not proof of automatic assembly.
+
 ## Visual experiments
 
 On Windows, open `OpenVisualizer.cmd` (or open `visualizer/index.html` in a browser) for an **offline two-link interactive arm**: joint sliders, inverse-kinematics targets, an illustrative obstacle and demo trajectory. Optional MuJoCo 3D teaching scene: `simulations/mujoco/two_link.xml`. See `docs/VISUAL_TESTING.md` for usage and evidence limits. No physical device control is enabled.
