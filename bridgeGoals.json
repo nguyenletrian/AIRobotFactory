@@ -23,6 +23,12 @@
           "evidence": "2026-10-31: PR #1 squash-merged to main commit 57662a6356e7366499caff54a92f8df4f2b47ae7. GitHub Actions PR run 41172803690 PASS across Ubuntu/Windows Python 3.10/3.12 (4/4 jobs; 10 deterministic unittest cases/job). This proves pure offline Python baseline only. Dedicated worker registration, Windows owner-machine result, printer calibration, local model training and robot control remain unverified. Keep bridgeTask.worker_enabled=0 until Manager identity/CDP/checkout validated."
         },
         {
+          "milestone_id": "visual-lab",
+          "title": "Offline browser joint visualization and optional MuJoCo 2-DOF physics scene",
+          "status": "ci_verified_awaiting_owner_gui",
+          "evidence": "2026-10-31: PR #5 squash-merged main commit 81553161d6464c80449617d7b48550d6642a8e3e. Python Actions run 41173458672: Windows/Ubuntu Python 3.10 and 3.12 all 4/4 jobs PASS (with optional MuJoCo test skipped when dependency absent). Visual JavaScript run 41173458651: 5/5 Node tests PASS, including HTML inline script parsing. MuJoCo Actions run 41173458639: full mujoco wheel installed, MJCF compiled and headless physics stepped 500 times with finite state PASS. Browser window rendering, owner-machine GUI, 6-DOF collision validation and real robot control remain unverified. Dedicated Bridge worker disabled."
+        },
+        {
           "milestone_id": "print-calibration",
           "title": "Parametric print coupons and measured printer calibration",
           "status": "planned",
