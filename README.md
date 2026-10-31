@@ -23,6 +23,10 @@ The owner initially builds and configures the first robot. Long term, the system
 
 Neither command controls a motor, network service, printer or external device. The commands create files only at explicitly supplied paths, refusing to overwrite existing output.
 
+## Visual experiments
+
+On Windows, open `OpenVisualizer.cmd` (or open `visualizer/index.html` in a browser) for an **offline two-link interactive arm**: joint sliders, inverse-kinematics targets, an illustrative obstacle and demo trajectory. Optional MuJoCo 3D teaching scene: `simulations/mujoco/two_link.xml`. See `docs/VISUAL_TESTING.md` for usage and evidence limits. No physical device control is enabled.
+
 ## Documentation
 
 - docs/ROADMAP.md — gated phases from virtual models through physical workshop.
