@@ -70,7 +70,9 @@ def create_evidence():
     if probe.returncode:
         raise RuntimeError("Ollama read-only probe failed: " + probe.stderr[-200:])
     ai = json.loads(probe.stdout)
+    version = subprocess.check_output([str(VENV_PYTHON), "-c", "import mujoco; print(mujoco.__version__)"], cwd=ROOT, text=True).strip()
     result = {
+        "mujoco_version": version,
         "status": "simulation_ready_headless",
         "model": "simulations/mujoco/workcell_6dof.xml",
         "workcell_report": str(output.relative_to(ROOT)),
