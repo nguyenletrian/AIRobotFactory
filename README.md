@@ -1,7 +1,37 @@
 # AIRobotFactory
 
-Simulation-first research project toward an AI-operated robotic fabrication workshop.
+A simulation-first, locally operated research project toward an AI-coordinated fabrication workshop.
 
-The first stage is software-only: robot kinematics, reproducible simulations, 3D-print experiments, and datasets for local-AI evaluation. **No physical robot or autonomous machine control is implemented or enabled.**
+## Goal
 
-See the bootstrap pull request for project architecture, goals, AIBridge manifest, initial experiments, and tests.
+The owner initially builds and configures the first robot. Long term, the system aims to design, fabricate, assemble, inspect and iteratively improve new devices (for example a mini vacuum cleaner) with no manual steps inside a **validated, bounded workcell**. This is a staged research objective, **not an existing autonomous capability**.
+
+## First stage: no hardware required
+
+- Deterministic 2-link planar forward/inverse kinematics (teaching model, **not** a six-axis industrial-arm model).
+- Export a small synthetic workspace JSONL dataset for evaluation of future local AI.
+- Generate a 20 mm calibration-cube ASCII STL as the first controlled 3D-print experiment.
+- Run automated Python unit tests on Windows and Linux.
+- Preserve the AIBridge worker/goal contract without assuming the worker is registered or online.
+
+### Quick start (Python 3.10+)
+
+    python -m pip install -e .
+    python -m unittest discover -s tests -v
+    python -m airobotfactory dataset --output artifacts/workspace.jsonl
+    python -m airobotfactory coupon --output artifacts/cube20.stl
+
+Neither command controls a motor, network service, printer or external device. The commands create files only at explicitly supplied paths, refusing to overwrite existing output.
+
+## Documentation
+
+- docs/ROADMAP.md — gated phases from virtual models through physical workshop.
+- docs/ARCHITECTURE.md — component boundaries and evidence contracts.
+- docs/PRINT_EXPERIMENTS.md — metrology and 3D-print trial protocol.
+- docs/LOCAL_AI.md — local model training/evaluation plan, **not** claimed training results.
+- docs/SAFETY.md — hardware authorization and physical safeguards.
+- docs/BRIDGE_ONBOARDING.md and AIBRIDGE_GUIDE.md — AIBridge onboarding.
+
+## Status
+
+Bootstrap implementation. No AIBridge worker registration, physical experiment, robot control, local model training or owner-machine test has been verified.

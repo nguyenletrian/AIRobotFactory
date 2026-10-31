@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "goals": [
+    {
+      "goal_id": "airobotfactory-simulation-first-20261031",
+      "title": "Simulation-first robot factory and local-AI research foundation",
+      "status": "active",
+      "owner_approval": "approved_in_chat_2026-10-31",
+      "purpose": "Design a long-term autonomous fabrication workcell. Start with deterministic simulations, budget-constrained 3D-print experiments and evaluated local-AI training data before any large physical hardware purchases or motion control.",
+      "acceptance": [
+        "Reproducible pure-Python geometry/kinematics tests pass without physical devices.",
+        "Initial 3D-print coupons are generated and tested only on hardware physically available; measured results must be recorded, never fabricated.",
+        "Local-AI dataset provenance, baselines, evaluation split and model limitations are documented before training.",
+        "Separate simulation, model planning, safety controller and physical device interfaces; no unapproved actuation.",
+        "An isolated AIBridge worker is registered and verified before worker_enabled is switched to 1 or any runtime task is queued.",
+        "All future physical manufacturing must use validated stations, guards and independently enforced emergency stops."
+      ],
+      "milestones": [
+        {
+          "milestone_id": "scaffold",
+          "title": "Repository architecture, Guides, deterministic simulation baseline and CI",
+          "status": "implementation_in_review",
+          "evidence": "Initial bootstrap branch; CI, merge and Windows worker evidence pending."
+        },
+        {
+          "milestone_id": "print-calibration",
+          "title": "Parametric print coupons and measured printer calibration",
+          "status": "planned",
+          "evidence": "No physical printer or measurement results confirmed."
+        },
+        {
+          "milestone_id": "local-ai-evaluation",
+          "title": "Local model adapter, dataset lineage and reproducible evaluation",
+          "status": "planned",
+          "evidence": "No model fine-tune or robot-policy training performed."
+        },
+        {
+          "milestone_id": "workcell-simulation",
+          "title": "6-DOF robot description, collision simulation and virtual tool changing",
+          "status": "planned",
+          "evidence": "Two-link teaching model is not a workcell or six-axis validation."
+        },
+        {
+          "milestone_id": "bridge-worker",
+          "title": "Isolated Windows Bridge worker registration and offline test verification",
+          "status": "blocked_on_registration",
+          "evidence": "No confirmed worker identity, local checkout, Manager lease or CDP port. Dispatch intentionally disabled."
+        },
+        {
+          "milestone_id": "physical-prototype",
+          "title": "Initial robot and guarded 3D-printed fixtures",
+          "status": "future_funding_gate",
+          "evidence": "Requires budget, actuator/structure calculation, independent safety review and physical testing."
+        }
+      ]
+    }
+  ]
+}

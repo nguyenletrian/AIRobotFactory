@@ -1,0 +1,15 @@
+{
+  "project_id": "AIRobotFactory",
+  "name": "AIRobotFactory",
+  "repository": "https://github.com/nguyenletrian/AIRobotFactory.git",
+  "workdir": "D:/AIRobotFactory",
+  "guide": "AIBRIDGE_GUIDE.md",
+  "branch": "main",
+  "task_source": "TaskSource",
+  "task_repository": ".",
+  "task_branch": "main",
+  "task_path": "bridgeTask.json",
+  "system_id": "airobotfactory",
+  "execution_kind": "bridge-runtime",
+  "execution_port": 0
+}
