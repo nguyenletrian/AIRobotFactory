@@ -29,6 +29,12 @@
           "evidence": "2026-10-31: PR #5 squash-merged main commit 81553161d6464c80449617d7b48550d6642a8e3e. Python Actions run 41173458672: Windows/Ubuntu Python 3.10 and 3.12 all 4/4 jobs PASS (with optional MuJoCo test skipped when dependency absent). Visual JavaScript run 41173458651: 5/5 Node tests PASS, including HTML inline script parsing. MuJoCo Actions run 41173458639: full mujoco wheel installed, MJCF compiled and headless physics stepped 500 times with finite state PASS. Browser window rendering, owner-machine GUI, 6-DOF collision validation and real robot control remain unverified. Dedicated Bridge worker disabled."
         },
         {
+          "milestone_id": "one-click-virtual-workcell",
+          "title": "One-run 6DOF MuJoCo + offline local-AI adapter + Windows bootstrap",
+          "status": "ci_verified_awaiting_owner_gui",
+          "evidence": "2026-10-31 PR #6 squash-merged to main commit 50da9d851fa84036cdfc5c22b0a10cc1c1204149. GitHub CI head 4d4197eb1fea9dd12fe144feba11ff18a88dde5c: full one-click environment run 41174213622 4/4 Windows+Ubuntu Python3.10/3.12 PASS, including first install, full tests, headless 6DOF sim, repeat with --skip-install, and Windows StartSimulation.cmd headless entrypoint. Python tests 41174213599 4/4 PASS; MuJoCo legacy model compile/step 41174213608 PASS. Optional local Ollama detection/proposal schema implemented with no model training or autonomous actions. Windows owner-machine GUI, live model inference, actual grasp, physical hardware, Manager worker binding are NOT verified. bridgeTask.worker_enabled=0 remains deliberate."
+        },
+        {
           "milestone_id": "print-calibration",
           "title": "Parametric print coupons and measured printer calibration",
           "status": "planned",
