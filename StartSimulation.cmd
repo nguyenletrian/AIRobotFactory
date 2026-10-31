@@ -1,22 +1,20 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-rem Simulation-only bootstrap: no administrator rights, device I/O or Bridge mutation.
+rem Isolated simulation-only setup: does not connect to motors, printers or Bridge.
 if exist ".venv\Scripts\python.exe" (
   ".venv\Scripts\python.exe" "scripts\bootstrap.py" %*
   goto result
 )
 where py >nul 2>nul
 if not errorlevel 1 (
-  py -3.12 -c "import sys; assert sys.maxsize>2**32" >nul 2>nul
-  if not errorlevel 1 (
-    py -3.12 "scripts\bootstrap.py" %*
-    goto result
-  )
-  py -3 -c "import sys; assert (3,10)<=sys.version_info[:2]<(3,14) and sys.maxsize>2**32" >nul 2>nul
-  if not errorlevel 1 (
-    py -3 "scripts\bootstrap.py" %*
-    goto result
+  rem Prefer Python 3.12 but handle systems with 3.13 or 3.14 as the global default.
+  for %%V in (3.12 3.13 3.11 3.10) do (
+    py -%%V -c "import sys; assert sys.maxsize>2**32" >nul 2>nul
+    if not errorlevel 1 (
+      py -%%V "scripts\bootstrap.py" %*
+      goto result
+    )
   )
 )
 where python >nul 2>nul
