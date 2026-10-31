@@ -19,5 +19,8 @@ jobs:
         run: python scripts/bootstrap.py --headless
       - name: Second run — no new pip installs
         run: python scripts/bootstrap.py --headless --skip-install
+      - name: Verify Windows double-click launcher in headless mode
+        if: runner.os == 'Windows'
+        run: cmd /c StartSimulation.cmd --headless --skip-install
       - name: Check virtual evidence and no hardware actions
         run: python -c "import json,pathlib; r=json.loads(pathlib.Path('artifacts/environment_report.json').read_text()); assert r['status']=='simulation_ready_headless' and not r['physical_actuation_enabled'] and not r['bridge_worker_modified']; print(r['workcell_report'])"
