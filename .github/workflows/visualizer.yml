@@ -13,6 +13,6 @@ jobs:
         with:
           node-version: '22'
       - name: JS tests
-        run: node --test visualizer/kinematics.test.cjs
+        run: node --test visualizer/*.test.cjs
       - name: JS syntax check
         run: node --check visualizer/kinematics.js
