@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>AIRobotFactory — Visual Robot Lab</title>
+<style>
+:root{font-family:Segoe UI,Arial,sans-serif;background:#0b121e;color:#ecf5ff;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#1b3049,#0b121e 66%)}
+main{max-width:1160px;margin:auto;padding:25px 15px}.tag{font-size:12px;color:#5ee2be;letter-spacing:2px;font-weight:800}h1{font-size:36px;margin:12px 0 8px;letter-spacing:-1px}h1 span{color:#60d8b9}header p{color:#9db1cb;font-size:14px;margin:0 0 22px}.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(305px,1fr);gap:15px}.panel{background:#101d30;border:1px solid #2a3c54;border-radius:17px;overflow:hidden}.heading{padding:18px 20px;font-weight:700;font-size:13px;color:#c9d6e6;display:flex;justify-content:space-between}.pill{background:#173c35;color:#7de9c8;padding:5px 10px;border-radius:20px;font-size:11px}
+canvas{width:100%;height:auto;aspect-ratio:720/560;display:block;cursor:crosshair;touch-action:none}.help{padding:15px 20px 21px;color:#8ba4c3;font-size:12px;line-height:1.5}.form{padding:0 20px 18px}
+.range{margin:0 0 20px}.range label{display:flex;justify-content:space-between;color:#b6cce4;font-size:13px;margin-bottom:10px}.range strong{color:#f1f6ff}input[type=range]{width:100%;accent-color:#61d8b9}
+.group-title{font-size:11px;letter-spacing:1.4px;font-weight:800;color:#829bb9;text-transform:uppercase;margin:12px 0 12px}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:17px}.inputs label{color:#b6cce4;font-size:12px}
+input[type=number]{width:100%;margin-top:6px;background:#0b1524;border:1px solid #344762;border-radius:9px;color:#fff;padding:11px;font:inherit}
+.option{display:flex;align-items:center;gap:8px;color:#aec2db;font-size:12px;margin-bottom:14px}
+.buttons{display:flex;gap:8px;margin:10px 0}button{cursor:pointer;font-weight:700;font-size:12px;border-radius:10px;padding:12px 8px;border:1px solid #3c526d;color:#dce9fa;background:#22344b}
+button.primary{background:#1d715f;border-color:#4aae92;color:#effff9;flex:1}button.secondary{flex:1}button.demo{width:100%}button:hover{filter:brightness(1.12)}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:16px;background:#0c1523;border:1px solid #293b50;padding:12px;border-radius:12px}.stats div{text-align:center}.stats small{display:block;color:#8da5c0;font-size:10px;margin-bottom:6px}.stats b{font-size:13px}
+#status{font-size:12px;background:#123b31;border-left:3px solid #60d7b7;border-radius:5px;color:#bcf3df;padding:12px;margin-top:13px;line-height:1.5}#status.bad{background:#3f2531;border-color:#f39aa3;color:#ffd8da}.note{font-size:11px;color:#87a0bb;line-height:1.5;margin-top:12px}
+footer{text-align:center;color:#738baa;padding:23px 0;font-size:12px}@media(max-width:820px){.grid{grid-template-columns:1fr}h1{font-size:31px}}
+</style>
+<script src="kinematics.js" defer></script>
+</head>
+<body>
+<main>
+<header><div class="tag">AIRobotFactory / VISUAL LAB 001</div><h1>Robot Visual Lab <span>2D</span></h1><p>Chuyển động trực quan · Động học thuận/ngược · Vùng làm việc · Vật cản giả lập</p></header>
+<div class="grid">
+<section class="panel">
+<div class="heading">Mặt phẳng chuyển động <span class="pill">100% Offline</span></div>
+<canvas id="view" width="720" height="560" aria-label="Mô phỏng cánh tay robot; chạm để đặt mục tiêu"></canvas>
+<div class="help">🟢 Khâu 1 &nbsp; 🔵 Khâu 2 &nbsp; 🟡 Đầu gắp/mục tiêu &nbsp; 🔴 Vật cản giả lập<br>Nhấn hoặc chạm lên hình để đổi vị trí đầu gắp. Tọa độ tính bằng mm.</div>
+</section>
+<section class="panel"><div class="heading">Điều khiển chuyển động</div><div class="form">
+<div class="range"><label for="a">Khớp vai <strong id="a-val">35°</strong></label><input id="a" type="range" min="-180" max="180" step="0.5" value="35"></div>
+<div class="range"><label for="b">Khớp khuỷu <strong id="b-val">-60°</strong></label><input id="b" type="range" min="-180" max="180" step="0.5" value="-60"></div>
+<div class="group-title">Kích thước khâu</div>
+<div class="inputs"><label for="l1">Khâu 1 (mm)<input id="l1" type="number" min="1" max="250" value="120"></label><label for="l2">Khâu 2 (mm)<input id="l2" type="number" min="1" max="250" value="90"></label></div>
+<div class="group-title">Tọa độ đích</div>
+<div class="inputs"><label for="x">X (mm)<input id="x" type="number" min="-500" max="500"></label><label for="y">Y (mm)<input id="y" type="number" min="-500" max="500"></label></div>
+<label class="option"><input id="up" type="checkbox" checked> Dùng nhánh khuỷu âm</label>
+<div class="buttons"><button class="primary" id="go" type="button">Di chuyển đến đích</button><button class="secondary" id="reset" type="button">Đặt lại</button></div>
+<button class="demo" id="demo" type="button">▶ Chạy quỹ đạo tự động</button>
+<div class="stats"><div><small>Đầu gắp X</small><b id="rx">—</b></div><div><small>Đầu gắp Y</small><b id="ry">—</b></div><div><small>Tầm với tối đa</small><b id="reach">210 mm</b></div></div>
+<div id="status" role="status" aria-live="polite">Sẵn sàng mô phỏng.</div>
+<p class="note">Đây là mô hình lý tưởng 2 khớp, không phải mô phỏng vật lý 6 bậc tự do. Không tính tải, mô-men, độ rơ động cơ hoặc giới hạn phần cứng thật.</p>
+</div></section>
+</div><footer>Mô phỏng độc lập với AIBridge, Ollama và thiết bị thật · Không kết nối robot</footer></main>
+<script>
+window.addEventListener('load',function(){
+ "use strict";
+ const K=window.AIRobotKinematics;
+ const e=id=>document.getElementById(id);
+ const value=id=>Number(e(id).value);
+ const canvas=e('view'),ctx=canvas.getContext('2d'),obstacle={x:92,y:66,r:17};
+ let target={x:0,y:0},playing=false,phase=0,last=0;
+ function getLinks(){const l1=value('l1'),l2=value('l2');if(![l1,l2].every(v=>Number.isFinite(v)&&v>0&&v<=250))throw new RangeError('Chiều dài phải từ 1 đến 250 mm');return {l1,l2};}
+ function message(txt,bad){e('status').textContent=txt;e('status').classList.toggle('bad',Boolean(bad));}
+ function stop(){playing=false;e('demo').textContent='▶ Chạy quỹ đạo tự động';}
+ function scale(l1,l2){return Math.min(640/(2*(l1+l2+18)),490/(2*(l1+l2+18)));}
+ function px(p,s){return {x:canvas.width/2+p.x*s,y:canvas.height/2-p.y*s};}
+ function putTarget(p){target=p;e('x').value=p.x.toFixed(2);e('y').value=p.y.toFixed(2);}
+ function setAngles(a,b){e('a').value=String(Math.max(-180,Math.min(180,a)));e('b').value=String(Math.max(-180,Math.min(180,b)));}
+ function draw(){
+   let l1,l2;try{({l1,l2}=getLinks());}catch(err){message(err.message,true);return;}
+   const a=value('a'),b=value('b'),pose=K.forward(a,b,l1,l2),origin={x:0,y:0},s=scale(l1,l2),W=canvas.width,H=canvas.height;
+   e('a-val').textContent=a.toFixed(1)+'°';e('b-val').textContent=b.toFixed(1)+'°';
+   e('rx').textContent=pose.tip.x.toFixed(1)+' mm';e('ry').textContent=pose.tip.y.toFixed(1)+' mm';e('reach').textContent=(l1+l2).toFixed(0)+' mm';
+   ctx.clearRect(0,0,W,H);ctx.fillStyle='#0d1829';ctx.fillRect(0,0,W,H);
+   ctx.strokeStyle='#1d3045';ctx.lineWidth=1;
+   for(let n=-320;n<=320;n+=40){const v=px({x:n,y:n},s);ctx.beginPath();ctx.moveTo(v.x,0);ctx.lineTo(v.x,H);ctx.moveTo(0,v.y);ctx.lineTo(W,v.y);ctx.stroke();}
+   ctx.strokeStyle='#40556e';ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+   ctx.save();ctx.setLineDash([6,8]);ctx.strokeStyle='#36536c';
+   for(const r of [l1+l2,Math.abs(l1-l2)]){ctx.beginPath();ctx.arc(W/2,H/2,r*s,0,2*Math.PI);ctx.stroke();}ctx.restore();
+   const o=px(obstacle,s);ctx.fillStyle='#e9868a33';ctx.strokeStyle='#e9868a';ctx.lineWidth=2;ctx.beginPath();ctx.arc(o.x,o.y,obstacle.r*s,0,2*Math.PI);ctx.fill();ctx.stroke();
+   const t=px(target,s);ctx.strokeStyle='#ffd45f';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(t.x-8,t.y);ctx.lineTo(t.x+8,t.y);ctx.moveTo(t.x,t.y-8);ctx.lineTo(t.x,t.y+8);ctx.stroke();
+   function link(from,to,color){const u=px(from,s),v=px(to,s);ctx.strokeStyle=color;ctx.lineWidth=13;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(u.x,u.y);ctx.lineTo(v.x,v.y);ctx.stroke();}
+   link(origin,pose.elbow,'#58d8b9');link(pose.elbow,pose.tip,'#89adff');
+   for(const q of [{p:origin,c:'#c2eade'},{p:pose.elbow,c:'#dce5ff'},{p:pose.tip,c:'#ffda67'}]){const v=px(q.p,s);ctx.fillStyle=q.c;ctx.strokeStyle='#12263b';ctx.lineWidth=3;ctx.beginPath();ctx.arc(v.x,v.y,8,0,2*Math.PI);ctx.fill();ctx.stroke();}
+   const oc={x:obstacle.x,y:obstacle.y},radius=obstacle.r+4;
+   const hit=K.intersectsCircle(origin,pose.elbow,oc,radius)||K.intersectsCircle(pose.elbow,pose.tip,oc,radius);
+   message(hit?'Cảnh báo: khâu giao với vật cản 2D. Không dùng kết quả này để bảo đảm an toàn.':playing?'Đang diễn hoạt quỹ đạo (mô hình lý tưởng).':'Đã cập nhật vị trí đầu gắp trong vùng làm việc 2D.',hit);
+ }
+ function solve(){
+   stop();try{
+     const {l1,l2}=getLinks(),x=value('x'),y=value('y');
+     if(!Number.isFinite(x)||!Number.isFinite(y))throw new RangeError('Tọa độ phải là số hợp lệ');
+     const q=K.inverse(x,y,l1,l2,e('up').checked);
+     if(Math.abs(q.a)>180||Math.abs(q.b)>180)throw new RangeError('Góc khớp nằm ngoài giới hạn demo');
+     setAngles(q.a,q.b);target={x,y};draw();
+   }catch(err){message(err.message,true);}
+ }
+ for(const name of ['a','b'])e(name).addEventListener('input',function(){
+   stop();try{const {l1,l2}=getLinks();putTarget(K.forward(value('a'),value('b'),l1,l2).tip);draw();}catch(err){message(err.message,true);}
+ });
+ for(const name of ['l1','l2'])e(name).addEventListener('input',function(){stop();draw();});
+ e('go').addEventListener('click',solve);
+ e('reset').addEventListener('click',function(){stop();e('l1').value=120;e('l2').value=90;setAngles(35,-60);e('up').checked=true;putTarget(K.forward(35,-60).tip);draw();});
+ canvas.addEventListener('pointerdown',function(event){
+   try{
+     const {l1,l2}=getLinks(),rect=canvas.getBoundingClientRect(),s=scale(l1,l2);
+     e('x').value=(((event.clientX-rect.left)/rect.width*canvas.width-canvas.width/2)/s).toFixed(2);
+     e('y').value=((canvas.height/2-(event.clientY-rect.top)/rect.height*canvas.height)/s).toFixed(2);
+     solve();
+   }catch(err){message(err.message,true);}
+ });
+ function tick(time){
+   if(!playing)return;const dt=last?Math.min((time-last)/1000,.06):0;last=time;phase+=dt*.65;
+   try{
+     const {l1,l2}=getLinks(),center=(l1+l2)*.45,r=Math.min(l2*.32,l1*.28);
+     const t={x:center+r*Math.cos(phase),y:r*Math.sin(phase)},q=K.inverse(t.x,t.y,l1,l2,e('up').checked);
+     setAngles(q.a,q.b);putTarget(t);draw();requestAnimationFrame(tick);
+   }catch(err){stop();message(err.message,true);}
+ }
+ e('demo').addEventListener('click',function(){
+   if(playing){stop();draw();return;}
+   try{getLinks();playing=true;last=0;phase=0;e('demo').textContent='■ Dừng diễn hoạt';requestAnimationFrame(tick);}catch(err){message(err.message,true);}
+ });
+ putTarget(K.forward(35,-60).tip);draw();
+});
+</script>
+</body></html>

@@ -1,0 +1,26 @@
+<mujoco model="AIRobotFactory 2-link teaching scene">
+  <!-- Optional virtual 3D model. Never use its controls as hardware commands. -->
+  <compiler angle="degree"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <asset><material name="mint" rgba="0.2 0.8 0.65 1"/><material name="blue" rgba="0.4 0.55 0.95 1"/></asset>
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1"/>
+    <geom name="ground" type="plane" size="0.8 0.8 0.1" rgba="0.17 0.24 0.3 1"/>
+    <geom name="base" type="cylinder" pos="0 0 0.08" size="0.045 0.08" rgba="0.5 0.6 0.68 1"/>
+    <geom name="obstacle" type="cylinder" pos="0.092 0.066 0.085" size="0.017 0.085" rgba="0.95 0.4 0.4 1"/>
+    <body name="upper_arm" pos="0 0 0.17">
+      <joint name="shoulder" type="hinge" axis="0 0 1" range="-170 170" damping="0.05"/>
+      <geom type="capsule" fromto="0 0 0 0.12 0 0" size="0.012" mass="0.13" material="mint"/>
+      <body name="forearm" pos="0.12 0 0">
+        <joint name="elbow" type="hinge" axis="0 0 1" range="-170 170" damping="0.05"/>
+        <geom type="capsule" fromto="0 0 0 0.09 0 0" size="0.01" mass="0.085" material="blue"/>
+        <site name="tcp" pos="0.09 0 0" size="0.008" rgba="1 0.85 0.38 1"/>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <position name="shoulder_target" joint="shoulder" kp="12" ctrlrange="-2.967 2.967"/>
+    <position name="elbow_target" joint="elbow" kp="8" ctrlrange="-2.967 2.967"/>
+  </actuator>
+  <sensor><jointpos joint="shoulder"/><jointpos joint="elbow"/><framepos objtype="site" objname="tcp"/></sensor>
+</mujoco>

@@ -1,0 +1,18 @@
+name: MuJoCo optional 3D physics smoke
+on:
+  pull_request:
+    paths: ['simulations/mujoco/**', 'tests/test_mujoco_scene.py', '.github/workflows/mujoco.yml']
+  push:
+    paths: ['simulations/mujoco/**', 'tests/test_mujoco_scene.py', '.github/workflows/mujoco.yml']
+jobs:
+  compile-step:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install physics dependency
+        run: python -m pip install mujoco
+      - name: Compile MJCF and step simulation
+        run: python -m unittest discover -s tests -p 'test_mujoco_scene.py' -v
