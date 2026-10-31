@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "worker_enabled": 0,
+  "force_restart": {
+    "enabled": false
+  },
+  "tasks": []
+}
