@@ -19,8 +19,8 @@
         {
           "milestone_id": "scaffold",
           "title": "Repository architecture, Guides, deterministic simulation baseline and CI",
-          "status": "implementation_in_review",
-          "evidence": "Initial bootstrap branch; CI, merge and Windows worker evidence pending."
+          "status": "ci_verified_awaiting_owner_worker",
+          "evidence": "2026-10-31: PR #1 squash-merged to main commit 57662a6356e7366499caff54a92f8df4f2b47ae7. GitHub Actions PR run 41172803690 PASS across Ubuntu/Windows Python 3.10/3.12 (4/4 jobs; 10 deterministic unittest cases/job). This proves pure offline Python baseline only. Dedicated worker registration, Windows owner-machine result, printer calibration, local model training and robot control remain unverified. Keep bridgeTask.worker_enabled=0 until Manager identity/CDP/checkout validated."
         },
         {
           "milestone_id": "print-calibration",
