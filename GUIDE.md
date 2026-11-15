@@ -1,0 +1,14 @@
+# AIRobotFactory - Shared AIBridge execution and priority guide
+
+## Shared AIBridge maintenance through any verified worker (owner policy 2026-11-15)
+This repository keeps its own task authority, project identity and development requirements. When it uses AIBrigde as a shared orchestrator, **any Manager-verified managed worker** (including `aimayatool-architect`) may be the execution carrier for owner-authorized AIBrigde log inspection, scoped Bridge code testing and a Manager-mediated Bridge restart. **A dedicated worker named for AIBrigde is not required.** Preserve the carrier's real `system_id`, `project_id`, `worker_id`, delivery target and authoritative TaskSource. Declare the AIBrigde target repository and verified local workdir explicitly inside a supported task; never impersonate a foreign worker or switch the owner's checkout. Respect route registration, exact PR/commit identification, read/test permissions and source-origin checks.
+
+Restart is shared infrastructure maintenance: inspect current Manager inventory, affected queues, saved results/ACKs and runtime ownership; use a single Manager-controlled safe restart gate; verify `NEW_RUNTIME_READY` and `SERVER_HEAD`. Never kill unrelated workers, lose pending results, rerun an ambiguous callback or resend an uncertain provider message. Follow the current `nguyenletrian/AIBrigde/GUIDE.md` and `guide/RUNTIME.md` as authoritative shared-platform rules. This text adds no new command capability by itself.
+
+## Focus on the approved goal; defer non-blocking defects
+**Immediate cross-repository owner priority: complete the AIMayaTool Slide Surface V3 slider and validate its actual behavior.** When assisting that *active, approved* goal, fix only what blocks a safe, meaningful functional test or its required evidence. Record unrelated CI runner allocation errors before test execution, cosmetic logs, optional feature work, broad refactoring and incidental enhancements as **DEFERRED** if an independently verified safe route can run all relevant required tests. Do not indefinitely hold V3 for these unrelated items or report unstarted CI as PASS.
+
+Never defer a flaw that compromises goal behavior, rig assertions, correct test execution, project/worker identity, scene or user data integrity, security, task-result/ACK preservation, safe restart or prevention of ambiguous re-execution. Run code-first diagnostics and deterministic tests, then use Maya to verify the selected fix in an isolated unsaved scene. Keep unrelated goals and paused work unchanged; the priority does not grant permission to start V3 tasks in this repository unless its own task/goal workflow authorizes them.
+
+## Local documentation
+Existing repository README, AGENTS, Guide/ or docs/ requirements remain applicable. This shared-operation note does not replace project-specific rules, grant new privileges, or prove any runtime has been upgraded.
